@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:padding="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/transformer_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/transformer_name"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@+id/transformer_icon"
+            android:hint="@string/bot_name"
+            android:text="Optimus Prime"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/stats_level1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@id/transformer_name"
+            android:orientation="horizontal"
+            android:weightSum="8">
+
+            <ImageView
+                android:id="@+id/intelligence_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="1"
+                android:src="@drawable/intelligence_vector" />
+
+            <TextView
+                android:id="@+id/intelligence_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/firepower_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="1"
+                android:src="@drawable/fire_power_vector" />
+
+            <TextView
+                android:id="@+id/firepower_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/strength_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:src="@drawable/strength_vector" />
+
+            <TextView
+                android:id="@+id/strength_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/rank_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="1"
+                android:src="@drawable/rank_vector" />
+
+            <TextView
+                android:id="@+id/rank_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stats_level2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/transformer_name"
+            android:layout_marginStart="40dp"
+            android:layout_toStartOf="@+id/check_transformer"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/transformer_icon"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <ImageView
+                android:id="@+id/speed_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/speed_vector" />
+
+            <TextView
+                android:id="@+id/speed_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/skill_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/skill_vector" />
+
+            <TextView
+                android:id="@+id/skill_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/team_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/team_vector" />
+
+            <TextView
+                android:id="@+id/team_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:hint="@string/team_alphabet"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/courage_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/courage_vector" />
+
+            <TextView
+                android:id="@+id/courage_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.5"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/endurance_icon"
+                android:layout_width="18dp"
+                android:layout_height="23dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/endurance_vector" />
+
+            <TextView
+                android:id="@+id/endurance_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.5"
+                android:hint="@string/default_value"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/check_transformer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/stats_level1"/>
+
+    </RelativeLayout>
+</layout>

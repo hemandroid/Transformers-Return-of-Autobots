@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Transformers War</string>
+    <string name="action_settings">Settings</string>
+    <string name="bot_name">Bot Name</string>
+    <string name="lorem_ipsum">Lorem Ipsum</string>
+    <string name="default_value">00</string>
+    <string name="team_alphabet">"?"</string>
+
+    <string name="input_range">1 - 10</string>
+</resources>

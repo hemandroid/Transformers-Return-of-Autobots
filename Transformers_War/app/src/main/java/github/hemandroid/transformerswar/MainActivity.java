@@ -18,12 +18,14 @@ import github.hemandroid.transformerswar.TransformerModelData.transformersList.T
 import github.hemandroid.transformerswar.TransformerModelData.transformersList.TransformersListResponse;
 import github.hemandroid.transformerswar.adapter.TransformersRecyclerListAdapter;
 import github.hemandroid.transformerswar.databinding.ActivityMainBinding;
+import github.hemandroid.transformerswar.interfaces.RetrofitCallBack;
 import github.hemandroid.transformerswar.utils.NetworkUtils;
+import github.hemandroid.transformerswar.utils.RetrofitNetworkCall;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RetrofitCallBack{
 
     ActivityMainBinding activityMainBinding;
     private View.OnClickListener mOnClickListener;
@@ -40,12 +42,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        if (NetworkUtils.getInstance().isNetworkAvailable(getApplicationContext())) {
-            mProgressDialog = NetworkUtils.getProgressDialog(getApplicationContext());
-            loadTransformersList();
-        } else {
-            if (mProgressDialog != null) mProgressDialog.dismiss();
-        }
+//        if (NetworkUtils.getInstance().isNetworkAvailable(getApplicationContext())) {
+//            mProgressDialog = NetworkUtils.getProgressDialog(getApplicationContext());
+        tokeAllSpark();
+        loadTransformersList();
+//        } else {
+//            if (mProgressDialog != null) mProgressDialog.dismiss();
+//        }
 
         initViewClickListener();
         initView();
@@ -75,25 +78,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadTransformersList() {
-        Call<TransformersListResponse> getTransformerListData = NetworkUtils.getApiInterface().getListOfTransformers(token);
-        getTransformerListData.enqueue(new Callback<TransformersListResponse>() {
-            @Override
-            public void onResponse(Call<TransformersListResponse> call, Response<TransformersListResponse> response) {
-                TransformersListResponse transformersListResponse = response.body();
-                if (transformersListResponse != null) {
-                    loadTransformerData = transformersListResponse.getTransformers();
-                }
-                transformersRecyclerListAdapter = new TransformersRecyclerListAdapter(MainActivity.this, loadTransformerData);
-                activityMainBinding.mainContent.transformersList.setAdapter(transformersRecyclerListAdapter);
-                if (mProgressDialog != null) mProgressDialog.dismiss();
-            }
 
-            @Override
-            public void onFailure(Call<TransformersListResponse> call, Throwable t) {
-                if (mProgressDialog != null) mProgressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Server Error...", Toast.LENGTH_SHORT).show();
-            }
-        });
+        RetrofitNetworkCall.callRetrofit(NetworkUtils.getApiInterface().getListOfTransformers(token), this);
+
+//        Call<TransformersListResponse> getTransformerListData = NetworkUtils.getApiInterface().getListOfTransformers(token);
+//        getTransformerListData.enqueue(new Callback<TransformersListResponse>() {
+//            @Override
+//            public void onResponse(Call<TransformersListResponse> call, Response<TransformersListResponse> response) {
+//                TransformersListResponse transformersListResponse = response.body();
+//                if (transformersListResponse != null) {
+//                    loadTransformerData = transformersListResponse.getTransformers();
+//                }
+//                transformersRecyclerListAdapter = new TransformersRecyclerListAdapter(MainActivity.this, loadTransformerData);
+//                activityMainBinding.mainContent.transformersList.setAdapter(transformersRecyclerListAdapter);
+//                if (mProgressDialog != null) mProgressDialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TransformersListResponse> call, Throwable t) {
+//                if (mProgressDialog != null) mProgressDialog.dismiss();
+//                Toast.makeText(MainActivity.this, "Server Error...", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void deleteTransformer() {
@@ -118,21 +124,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tokeAllSpark() {
-        Call<String> getTokenAllSpark = NetworkUtils.getApiHTMLInterface().getTokenAllSpark();
-        getTokenAllSpark.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.code() == 200) {
-                    Toast.makeText(MainActivity.this, "Token --> " + response.body(), Toast.LENGTH_SHORT).show();
-                }
-            }
+        RetrofitNetworkCall.callRetrofit(NetworkUtils.getApiInterface().getTokenAllSpark(), this);
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                if (mProgressDialog != null) mProgressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Server Error...", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        Call<String> getTokenAllSpark = NetworkUtils.getApiHTMLInterface().getTokenAllSpark();
+//        getTokenAllSpark.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                if (response.code() == 200) {
+//                    Toast.makeText(MainActivity.this, "Token --> " + response.body(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                if (mProgressDialog != null) mProgressDialog.dismiss();
+//                Toast.makeText(MainActivity.this, "Server Error...", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+    }
+
+    @Override
+    public <T> void onSuccessResponse(Response<T> successResponse) {
+
+    }
+
+    @Override
+    public <T> void onFailureResponse(Call<T> errorResponse) {
+
     }
 
     @Override

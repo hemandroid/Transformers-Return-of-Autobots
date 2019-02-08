@@ -7,7 +7,7 @@ import retrofit2.Response;
 
 public class RetrofitNetworkCall {
 
-    public static <T> void callRetrofit(Call<T> call, final RetrofitCallBack retrofitCallBack){
+    public static <T> void callRetrofit(Call<T> call, final RetrofitCallBack retrofitCallBack) {
         call.enqueue(new Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
@@ -16,7 +16,7 @@ public class RetrofitNetworkCall {
 
             @Override
             public void onFailure(Call<T> call, Throwable t) {
-                retrofitCallBack.onFailureResponse(call);
+                retrofitCallBack.onFailureResponse(call, t);
             }
         });
     }

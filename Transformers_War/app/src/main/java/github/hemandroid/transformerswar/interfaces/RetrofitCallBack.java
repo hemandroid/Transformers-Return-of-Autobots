@@ -3,7 +3,8 @@ package github.hemandroid.transformerswar.interfaces;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public interface RetrofitCallBack {
+public interface RetrofitCallBack<T> {
     <T> void onSuccessResponse(Response<T> successResponse);
-    <T> void onFailureResponse(Call<T> errorResponse);
+
+    <T> void onFailureResponse(Call<T> errorResponse, Throwable throwable);
 }

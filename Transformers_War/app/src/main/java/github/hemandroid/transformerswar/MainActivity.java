@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements RetrofitCallBack{
+public class MainActivity extends AppCompatActivity implements RetrofitCallBack {
 
     ActivityMainBinding activityMainBinding;
     private View.OnClickListener mOnClickListener;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements RetrofitCallBack{
     private List<TransformerData> loadTransformerData = new ArrayList<>();
     private LinearLayoutManager transformerLinearLayoutManager;
     private TransformersRecyclerListAdapter transformersRecyclerListAdapter;
+    private String transformerToken;
 
     private String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2Zvcm1lcnNJZCI6Ii1MWGVfa0Z2TGI2ME1JWjlZaE9xIiwiaWF0IjoxNTQ5MDUwMjUxfQ.s8Vi4yrWtiHp7n8cGUs2h8SAE11YYPhuu4NEKLTQF-g";
     private ProgressDialog mProgressDialog;
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements RetrofitCallBack{
 //        if (NetworkUtils.getInstance().isNetworkAvailable(getApplicationContext())) {
 //            mProgressDialog = NetworkUtils.getProgressDialog(getApplicationContext());
         tokeAllSpark();
-        loadTransformersList();
 //        } else {
 //            if (mProgressDialog != null) mProgressDialog.dismiss();
 //        }
@@ -80,26 +80,6 @@ public class MainActivity extends AppCompatActivity implements RetrofitCallBack{
     private void loadTransformersList() {
 
         RetrofitNetworkCall.callRetrofit(NetworkUtils.getApiInterface().getListOfTransformers(token), this);
-
-//        Call<TransformersListResponse> getTransformerListData = NetworkUtils.getApiInterface().getListOfTransformers(token);
-//        getTransformerListData.enqueue(new Callback<TransformersListResponse>() {
-//            @Override
-//            public void onResponse(Call<TransformersListResponse> call, Response<TransformersListResponse> response) {
-//                TransformersListResponse transformersListResponse = response.body();
-//                if (transformersListResponse != null) {
-//                    loadTransformerData = transformersListResponse.getTransformers();
-//                }
-//                transformersRecyclerListAdapter = new TransformersRecyclerListAdapter(MainActivity.this, loadTransformerData);
-//                activityMainBinding.mainContent.transformersList.setAdapter(transformersRecyclerListAdapter);
-//                if (mProgressDialog != null) mProgressDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<TransformersListResponse> call, Throwable t) {
-//                if (mProgressDialog != null) mProgressDialog.dismiss();
-//                Toast.makeText(MainActivity.this, "Server Error...", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     private void deleteTransformer() {
@@ -125,32 +105,24 @@ public class MainActivity extends AppCompatActivity implements RetrofitCallBack{
 
     private void tokeAllSpark() {
         RetrofitNetworkCall.callRetrofit(NetworkUtils.getApiInterface().getTokenAllSpark(), this);
-
-//        Call<String> getTokenAllSpark = NetworkUtils.getApiHTMLInterface().getTokenAllSpark();
-//        getTokenAllSpark.enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                if (response.code() == 200) {
-//                    Toast.makeText(MainActivity.this, "Token --> " + response.body(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                if (mProgressDialog != null) mProgressDialog.dismiss();
-//                Toast.makeText(MainActivity.this, "Server Error...", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @Override
-    public <T> void onSuccessResponse(Response<T> successResponse) {
-
+    public void onSuccessResponse(Response successResponse) {
+        if (successResponse.body() instanceof String) {
+            Toast.makeText(MainActivity.this, "Token --> " + successResponse.body(), Toast.LENGTH_SHORT).show();
+            loadTransformersList();
+        } else if (successResponse.body() instanceof TransformersListResponse) {
+            TransformersListResponse transformersListResponse = (TransformersListResponse) successResponse.body();
+            loadTransformerData = transformersListResponse.getTransformers();
+            transformersRecyclerListAdapter = new TransformersRecyclerListAdapter(MainActivity.this, loadTransformerData);
+            activityMainBinding.mainContent.transformersList.setAdapter(transformersRecyclerListAdapter);
+        }
     }
 
     @Override
-    public <T> void onFailureResponse(Call<T> errorResponse) {
-
+    public void onFailureResponse(Call errorResponse, Throwable throwable) {
+        Toast.makeText(MainActivity.this, "Server Error..." + errorResponse.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -174,4 +146,5 @@ public class MainActivity extends AppCompatActivity implements RetrofitCallBack{
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -29,31 +29,32 @@ public class NetworkUtils {
         if (mRetrofit == null) {
             OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
             Retrofit.Builder builder = new Retrofit.Builder().baseUrl(APIs.BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create());
             mRetrofit = builder.client(httpBuilder.build()).build();
         }
         return mRetrofit;
     }
 
-    public static Retrofit getHTMLRetrofit(){
-        if (mRetrofit == null){
-            OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
-            Retrofit.Builder htmlBuilder = new Retrofit.Builder().baseUrl(APIs.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create());
-            mRetrofit = htmlBuilder.client(httpBuilder.build()).build();
-        }
-        return mRetrofit;
-    }
+//    public static Retrofit getHTMLRetrofit(){
+//        if (mRetrofit == null){
+//            OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+//            Retrofit.Builder htmlBuilder = new Retrofit.Builder().baseUrl(APIs.BASE_URL)
+//                    .addConverterFactory(ScalarsConverterFactory.create());
+//            mRetrofit = htmlBuilder.client(httpBuilder.build()).build();
+//        }
+//        return mRetrofit;
+//    }
 
     public static RetrofitInterface getApiInterface() {
         mRetrofitInterface = getJSONRetrofit().create(RetrofitInterface.class);
         return mRetrofitInterface;
     }
 
-    public static RetrofitInterface getApiHTMLInterface(){
-        mRetrofitHTMLInterface = getHTMLRetrofit().create(RetrofitInterface.class);
-        return mRetrofitHTMLInterface;
-    }
+//    public static RetrofitInterface getApiHTMLInterface(){
+//        mRetrofitHTMLInterface = getHTMLRetrofit().create(RetrofitInterface.class);
+//        return mRetrofitHTMLInterface;
+//    }
 
     public Boolean isNetworkAvailable(Context context) {
         ConnectivityManager check = (ConnectivityManager) context.
